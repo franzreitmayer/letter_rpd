@@ -1,4 +1,8 @@
 const Spec = [{
+        regExPattern: /^\s+/,
+        tokenType: null
+    },
+    {
         regExPattern: /^\d+/,
         tokenType: 'NUMBER'
     },
@@ -30,13 +34,21 @@ class Tokenizer {
             return null;
         }
 
+        const string = this._string.slice(this._cursor);
         for (const { regExPattern, tokenType }
             of Spec) {
             // const [regExPattern, tokenType] = Spec[i];
-            console.log(`regExPattern: ${regExPattern}, tokenType: ${tokenType}`);
+            const tokenValue = this._match(regExPattern, string);
+            if (tokenValue == null) {
+                continue;
+            }
+            return {
+                type: tokenType,
+                value: tokenValue
+            }
         }
 
-        const string = this._string.slice(this._cursor);
+        throw new SyntaxError(`Could not match any token at ${string}`);
 
         if (!Number.isNaN(Number(string[0]))) {
             let number = '';
@@ -49,8 +61,15 @@ class Tokenizer {
                 value: number
             }
         }
+    }
 
-
+    _match(regularExpression, string) {
+        const matched = regularExpression.exec(string);
+        if (matched == null) {
+            return null;
+        }
+        this._cursor += matched[0].length;
+        return matched[0];
     }
 }
 

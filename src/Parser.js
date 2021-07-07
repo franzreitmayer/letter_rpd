@@ -26,7 +26,28 @@ class Parser {
     Program() {
         return {
             type: 'Program',
-            body: this.NumericalLiteral()
+            body: this.Literal()
+        }
+    }
+
+    /**
+     * NumericLiteral | StringLiteral
+     */
+    Literal() {
+        switch (this._lookahead.type) {
+            case 'NUMBER':
+                return this.NumericalLiteral();
+            case 'STRING':
+                return this.StringLiteral();
+        }
+        throw new SyntaxError(`Expexted token NUMBER or STRING, but saw ${this._lookahead.type}`);
+    }
+
+    StringLiteral() {
+        const token = this._eat('STRING');
+        return {
+            type: 'StringLiteral',
+            value: token.value
         }
     }
 
