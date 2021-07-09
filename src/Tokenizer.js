@@ -1,4 +1,14 @@
 const Spec = [{
+        // Single line comment
+        regExPattern: /^\/\/.*/,
+        tokenType: null
+    },
+    {
+        // multiline comment
+        regExPattern: /^\/\*[\s\S]*?\*\//,
+        tokenType: null
+    },
+    {
         regExPattern: /^\s+/,
         tokenType: null
     },
@@ -41,6 +51,10 @@ class Tokenizer {
             const tokenValue = this._match(regExPattern, string);
             if (tokenValue == null) {
                 continue;
+            }
+
+            if (tokenType == null) {
+                return this.getNextToken(); // as null is returned from whitespaces ignore it and return next token
             }
             return {
                 type: tokenType,
