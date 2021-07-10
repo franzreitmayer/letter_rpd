@@ -11,7 +11,7 @@ const Spec = [{
     {
         // SEMI - Semikolon as delimiter
         regExPattern: /^;/,
-        tokenType: 'SEMI'
+        tokenType: ';'
     },
     {
         // OPEN CURLY BRACKET

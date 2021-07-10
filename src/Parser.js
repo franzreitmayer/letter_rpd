@@ -57,18 +57,28 @@ class Parser {
      * Statement
      *  : ExpressionStatement
      *  | BlockStatement
+     *  | EmptyStatement
      *  ;
      * 
      * @returns 
      */
     Statement() {
         switch (this._lookahead.type) {
+            case ';':
+                return this.EmptyStatement();
             case '{':
                 return this.BlockStatement();
             default:
                 return this.ExpressionStatement();
         }
 
+    }
+
+    EmptyStatement() {
+        this._eat(';');
+        return {
+            type: 'EmptyStatement'
+        }
     }
 
     /**
@@ -96,7 +106,7 @@ class Parser {
      */
     ExpressionStatement() {
         const expression = this.Expression();
-        this._eat('SEMI'); // eat up semicolon delimiter
+        this._eat(';'); // eat up semicolon delimiter
         return {
             type: 'ExpressionStatement',
             expression: expression

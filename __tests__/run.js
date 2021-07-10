@@ -8,7 +8,8 @@ const parser = new Parser();
  */
 const tests = [require('./literals-test.js'),
     require('./statement-list-tests.js'),
-    require('./block-test.js')
+    require('./block-test.js'),
+    require('./empty-statement-tests.js')
 ];
 
 function exec() {
