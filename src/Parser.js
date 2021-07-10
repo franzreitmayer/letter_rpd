@@ -26,9 +26,66 @@ class Parser {
     Program() {
         return {
             type: 'Program',
-            body: this.Literal()
+            body: this.StatementList()
         }
     }
+
+    /**
+     * StatementList:
+     *  : Statement
+     *  | StatmentList Statement
+     * 
+     *        ^
+     *        |
+     *    This is left recursion and must be rewritten
+     * 
+     * StatementList:
+     *  : Statement
+     *  | StatementList Statement -> Statement Statement Statement Statement ...
+     * 
+     */
+    StatementList() {
+        const statementList = [this.Statement()];
+
+        while (this._lookahead != null) {
+            statementList.push(this.Statement());
+        }
+        return statementList;
+    }
+
+    /**
+     * Statement
+     *  : ExpressionStatement
+     *  ;
+     * 
+     * @returns 
+     */
+    Statement() {
+        return this.ExpressionStatement();
+    }
+
+
+    /**
+     * ExpressionStatement
+     *  : Expression ';'
+     */
+    ExpressionStatement() {
+        const expression = this.Expression();
+        this._eat('SEMI'); // eat up semicolon delimiter
+        return {
+            type: 'ExpressionStatement',
+            expression: expression
+        }
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    Expression() {
+        return this.Literal();
+    }
+
 
     /**
      * NumericLiteral | StringLiteral

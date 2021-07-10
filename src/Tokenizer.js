@@ -9,6 +9,11 @@ const Spec = [{
         tokenType: null
     },
     {
+        // SEMI - Semikolon as delimiter
+        regExPattern: /^;/,
+        tokenType: 'SEMI'
+    },
+    {
         regExPattern: /^\s+/,
         tokenType: null
     },

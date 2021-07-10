@@ -14,7 +14,8 @@ function exec() {
      * Dokumentation comment
      * 
      */
-     42
+     42;
+     "Hello World!";
 `;
 
     const ast = parser.parse(program);
@@ -25,10 +26,11 @@ function exec() {
 
 function test(program, expectedAST) {
     const ast = parser.parse(program);
-    assert.deepStrictEqual(ast, expectedAST);
+    assert.deepEqual(ast, expectedAST);
 
 }
 
+exec();
 
 tests.forEach(testRun => {
     testRun(test);
