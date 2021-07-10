@@ -14,6 +14,16 @@ const Spec = [{
         tokenType: 'SEMI'
     },
     {
+        // OPEN CURLY BRACKET
+        regExPattern: /^\{/,
+        tokenType: '{'
+    },
+    {
+        // CLOSING CURLY BRACKET
+        regExPattern: /^\}/,
+        tokenType: '}'
+    },
+    {
         regExPattern: /^\s+/,
         tokenType: null
     },

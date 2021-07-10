@@ -6,7 +6,10 @@ const parser = new Parser();
 /**
  * List of tests
  */
-const tests = [require('./literals-test.js'), require('./statement-list-tests.js')];
+const tests = [require('./literals-test.js'),
+    require('./statement-list-tests.js'),
+    require('./block-test.js')
+];
 
 function exec() {
     const program = `
